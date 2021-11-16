@@ -58,4 +58,16 @@ module.exports = class UserValidations {
             })
             .validateAsync(data);
     }
+
+    static async UserForgetPasswordValidation(data, error) {
+        return await joi
+            .object({
+                user_email: joi
+                    .string()
+                    .email()
+                    .lowercase()
+                    .error(new error(400, "Email is invalid")),
+            })
+            .validateAsync(data);
+    }
 };
