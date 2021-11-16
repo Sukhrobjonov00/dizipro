@@ -6,7 +6,7 @@ module.exports = async function AuthMiddleware(req, res, next) {
 
         if (!token) throw new res.error(401, "Unauthorized");
 
-        const data = checkToken(token);
+        const data = verifyToken(token);
 
         if (!data) throw new res.error(401, "Unauthorized");
 

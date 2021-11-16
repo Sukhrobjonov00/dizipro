@@ -1,6 +1,6 @@
 module.exports = async (sequelize, Sequelize) => {
     return await sequelize.define("sessions", {
-        sessions_id: {
+        session_id: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
             primaryKey: true,

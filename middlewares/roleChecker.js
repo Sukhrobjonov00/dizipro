@@ -1,5 +1,3 @@
-const { verifyToken } = require("../modules/jwt");
-
 module.exports = function RoleChecker(role) {
     return function (req, res, next) {
         try {
