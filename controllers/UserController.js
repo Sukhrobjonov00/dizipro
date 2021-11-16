@@ -12,6 +12,11 @@ module.exports = class UserController {
                 ...data,
                 user_password: genHash(data.user_password),
             });
+
+            const session = await req.db.sessions.create({
+                session_useragent: req.headers["user-agent"] || "Unknown",
+                user_id: user.dataValues.user_id,
+            });
         } catch (error) {
             next(error);
         }
