@@ -1,5 +1,6 @@
 module.exports = async function init(db) {
     const countries = await db.countries.count();
+    const users = await db.users.count();
     if (countries === 0) {
         for (let country of data) {
             await db.countries.create({
@@ -7,6 +8,24 @@ module.exports = async function init(db) {
                 country_code: country.code,
             });
         }
+    }
+
+    if (users === 0) {
+        const admin = await db.users.create({
+            user_name: "admin",
+            user_password: "admin",
+            user_email: "admin@gmail.com",
+            user_role: "admin",
+            country_id: 1,
+        });
+
+        const user = await db.users.create({
+            user_name: "user",
+            user_password: "user",
+            user_email: "user@gmail.com",
+            user_role: "user",
+            country_id: 1,
+        });
     }
 };
 
