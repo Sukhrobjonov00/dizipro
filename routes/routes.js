@@ -1,9 +1,3 @@
-const errorHandler = require("../helpers/errorHandler");
+const Routes = require("express").Router();
 
-module.exports = (app) => {
-    try {
-        //
-    } finally {
-        app.use(errorHandler);
-    }
-};
+module.exports = Routes;
