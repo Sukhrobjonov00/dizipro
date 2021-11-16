@@ -1,4 +1,5 @@
 const { genHash } = require("../modules/bcrypt");
+const { createToken } = require("../modules/jwt");
 const {
     UserCreateAccountValidation,
 } = require("../validations/UserValidation");
@@ -17,7 +18,22 @@ module.exports = class UserController {
                 session_useragent: req.headers["user-agent"] || "Unknown",
                 user_id: user.dataValues.user_id,
             });
+
+            const token = createToken({
+                session_id: session.dataValues.session_id,
+                user_role: user.dataValues.user_role,
+            });
+
+            await res.status(201).json({
+                ok: true,
+                message: "User created successfully",
+                data: { token },
+            });
         } catch (error) {
+            if (error.message === "Validation error") {
+                error.code = 400;
+                error.message = "This email already exists";
+            }
             next(error);
         }
     }

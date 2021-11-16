@@ -27,6 +27,8 @@ module.exports = class UserValidations {
                     .error(new error(400, "Gender is invalid")),
                 country_id: joi
                     .number()
+                    .min(1)
+                    .max(243)
                     .required()
                     .error(new error(400, "Country id is invalid")),
                 user_password: joi
