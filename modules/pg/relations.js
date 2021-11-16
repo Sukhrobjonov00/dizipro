@@ -1,4 +1,4 @@
-module.exports = async (db) => {
+module.exports = async function relations(db) {
     await db.countries.hasMany(db.users, {
         foreignKey: "country_id",
         allowNull: false,
