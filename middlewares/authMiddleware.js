@@ -21,7 +21,7 @@ module.exports = async function AuthMiddleware(req, res, next) {
         if (!session) throw new res.error(401, "Unauthorized");
 
         req.session = session;
-        req.role = data.role;
+        req.role = data.user_role;
 
         next();
     } catch (error) {
