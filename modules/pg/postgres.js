@@ -12,6 +12,6 @@ module.exports = async function postgres() {
 
         return db;
     } catch (error) {
-        console.log("DATABASE ERROR", error);
+        console.log("DATABASE ERROR:", error);
     }
 };
