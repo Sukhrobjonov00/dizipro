@@ -8,4 +8,14 @@ module.exports = async function relations(db) {
         foreignKey: "country_id",
         allowNull: false,
     });
+
+    await db.users.hasMany(db.sessions, {
+        foreignKey: "user_id",
+        allowNull: false,
+    });
+
+    await db.sessions.belongsTo(db.users, {
+        foreignKey: "user_id",
+        allowNull: false,
+    });
 };
