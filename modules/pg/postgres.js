@@ -21,7 +21,7 @@ module.exports = async function postgres() {
 
         await init(db);
 
-        sequelize.sync();
+        sequelize.sync({ force: false });
 
         return db;
     } catch (error) {

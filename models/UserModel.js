@@ -11,8 +11,8 @@ module.exports = async (sequelize, Sequelize) => {
             allowNull: false,
         },
 
-        user_username: {
-            type: Sequelize.STRING(32),
+        user_email: {
+            type: Sequelize.STRING,
             allowNull: false,
             unique: true,
             lowercase: true,

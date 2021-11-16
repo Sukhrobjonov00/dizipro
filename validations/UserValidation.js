@@ -4,7 +4,7 @@ module.exports = class UserValidations {
     static async UserCreateAccountValidation(data, error) {
         return await joi
             .object({
-                username: joi
+                user_name: joi
                     .string()
                     .min(2)
                     .max(64)
@@ -15,12 +15,12 @@ module.exports = class UserValidations {
                             "Username must be between 2 and 64 characters"
                         )
                     ),
-                email: joi
+                user_email: joi
                     .string()
                     .email()
                     .lowercase()
                     .error(new error(400, "Email is invalid")),
-                gender: joi
+                user_gender: joi
                     .string()
                     .valid("male", "female")
                     .required()
@@ -29,7 +29,7 @@ module.exports = class UserValidations {
                     .number()
                     .required()
                     .error(new error(400, "Country id is invalid")),
-                password: joi
+                user_password: joi
                     .string()
                     .min(4)
                     .max(128)
