@@ -28,5 +28,11 @@ module.exports = async (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
+
+        user_role: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            defaultValue: "user",
+        },
     });
 };
