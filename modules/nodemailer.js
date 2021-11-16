@@ -20,4 +20,4 @@ async function sendEmail(mailTo, html) {
     return info;
 }
 
-module.exports = sendMail;
+module.exports = sendEmail;

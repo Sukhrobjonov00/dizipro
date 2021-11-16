@@ -1,8 +1,10 @@
 const { genHash, compareHash } = require("../modules/bcrypt");
 const { createToken } = require("../modules/jwt");
+const sendEmail = require("../modules/nodemailer");
 const {
     UserCreateAccountValidation,
     UserLoginValidation,
+    UserForgetPasswordValidation,
 } = require("../validations/UserValidation");
 
 module.exports = class UserController {
@@ -77,6 +79,49 @@ module.exports = class UserController {
                 ok: true,
                 message: "User logged in successfully",
                 data: { token },
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async UserRecoveryPasswordSubmitPostController(req, res, next) {
+        try {
+            const { user_email } = await UserForgetPasswordValidation(
+                req.body,
+                res.error
+            );
+
+            const user = await req.db.users.findOne({
+                where: {
+                    user_email,
+                },
+                raw: true,
+            });
+
+            if (!user) throw new res.error(404, "User not found");
+
+            const count = await req.db.email_attempts.count({
+                where: {
+                    user_id: user.user_id,
+                },
+            });
+
+            if (count > 5)
+                throw new res.error(429, "Too many attempts, try again later");
+
+            const attempt = await req.db.email_attempts.create({
+                user_id: user.user_id,
+            });
+
+            await sendEmail(
+                user.user_email,
+                `<a href="${process.env.SITE_URL}/v1/users/password${attempt.dataValues.attempt_id}">Click to recover</a>`
+            );
+
+            res.status(201).json({
+                ok: true,
+                message: "Confirmation message sent. Check your email.",
             });
         } catch (error) {
             next(error);
