@@ -1,7 +1,9 @@
+const {
+    UserCreateAccountPostController,
+} = require("../../controllers/UserController");
+
 const router = require("express").Router();
 
-router.get("/", (req, res) => {
-    res.json({ ok: true });
-});
+router.post("/account", UserCreateAccountPostController);
 
 module.exports = router;
