@@ -1,3 +1,5 @@
+const { genHash } = require("../bcrypt");
+
 module.exports = async function init(db) {
     const countries = await db.countries.count();
     const users = await db.users.count();
@@ -13,7 +15,8 @@ module.exports = async function init(db) {
     if (users === 0) {
         const admin = await db.users.create({
             user_name: "admin",
-            user_password: "admin",
+            user_password: genHash("admin"),
+            user_gender: "male",
             user_email: "admin@gmail.com",
             user_role: "admin",
             country_id: 1,
@@ -21,7 +24,8 @@ module.exports = async function init(db) {
 
         const user = await db.users.create({
             user_name: "user",
-            user_password: "user",
+            user_password: genHash("user"),
+            user_gender: "male",
             user_email: "user@gmail.com",
             user_role: "user",
             country_id: 1,
