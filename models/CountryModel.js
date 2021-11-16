@@ -1,4 +1,4 @@
-module.exports = async (Sequelize, sequelize) => {
+module.exports = async (sequelize, Sequelize) => {
     return sequelize.define("countries", {
         country_id: {
             type: Sequelize.INTEGER,
