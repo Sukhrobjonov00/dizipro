@@ -1,3 +1,4 @@
+const { generate } = require("generate-password");
 const { genHash, compareHash } = require("../modules/bcrypt");
 const { createToken } = require("../modules/jwt");
 const sendEmail = require("../modules/nodemailer");
@@ -116,12 +117,65 @@ module.exports = class UserController {
 
             await sendEmail(
                 user.user_email,
-                `<a href="${process.env.SITE_URL}/v1/users/password${attempt.dataValues.attempt_id}">Click to recover</a>`
+                `<a href="${process.env.SITE_URL}/v1/users/password/${attempt.dataValues.attempt_id}">Click to recover</a>`
             );
 
             res.status(201).json({
                 ok: true,
                 message: "Confirmation message sent. Check your email.",
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async UserRecoveryPasswordCheckGetController(req, res, next) {
+        try {
+            const { attempt_id } = req.params;
+
+            console.log(attempt_id);
+
+            if (!attempt_id) throw new res.error(404, "Page not found");
+
+            const attempt = await req.db.email_attempts.findOne({
+                where: {
+                    attempt_id,
+                },
+                raw: true,
+                include: req.db.users,
+            });
+
+            if (!attempt) throw new res.error(404, "Page not found");
+
+            await req.db.email_attempts.destroy({
+                where: {
+                    user_id: attempt.user_id,
+                },
+            });
+
+            const new_password = generate({
+                length: 8,
+            });
+
+            await req.db.users.update(
+                {
+                    user_password: genHash(new_password),
+                },
+                {
+                    where: {
+                        user_id: attempt.user_id,
+                    },
+                }
+            );
+
+            await sendEmail(
+                attempt["user.user_email"],
+                `<p>Your new password is: ${new_password} . Please update it!</p>`
+            );
+
+            res.status(201).json({
+                ok: true,
+                message: "New password sent. Check your email.",
             });
         } catch (error) {
             next(error);

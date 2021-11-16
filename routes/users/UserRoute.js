@@ -2,6 +2,7 @@ const {
     UserCreateAccountPostController,
     UserLoginPostController,
     UserRecoveryPasswordSubmitPostController,
+    UserRecoveryPasswordCheckGetController,
 } = require("../../controllers/UserController");
 const authMiddleware = require("../../middlewares/authMiddleware");
 const roleChecker = require("../../middlewares/roleChecker");
@@ -17,5 +18,6 @@ router.post(
 router.post("/login", UserLoginPostController);
 
 router.post("/password", UserRecoveryPasswordSubmitPostController);
+router.get("/password/:attempt_id", UserRecoveryPasswordCheckGetController);
 
 module.exports = router;
