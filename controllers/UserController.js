@@ -117,6 +117,7 @@ module.exports = class UserController {
 
             await sendEmail(
                 user.user_email,
+                "Confirm recovery password ✔",
                 `<a href="${process.env.SITE_URL}/v1/users/password/${attempt.dataValues.attempt_id}">Click to recover</a>`
             );
 
@@ -170,6 +171,7 @@ module.exports = class UserController {
 
             await sendEmail(
                 attempt["user.user_email"],
+                "Password changed",
                 `<p>Your new password is: ${new_password} . Please update it!</p>`
             );
 
