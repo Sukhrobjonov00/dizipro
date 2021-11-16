@@ -40,4 +40,22 @@ module.exports = class UserValidations {
             })
             .validateAsync(data);
     }
+
+    static async UserLoginValidation(data, error) {
+        return await joi
+            .object({
+                user_email: joi
+                    .string()
+                    .email()
+                    .lowercase()
+                    .error(new error(400, "Email is invalid")),
+                user_password: joi
+                    .string()
+                    .min(4)
+                    .max(128)
+                    .required()
+                    .error(new error(400, "Password is invalid")),
+            })
+            .validateAsync(data);
+    }
 };
