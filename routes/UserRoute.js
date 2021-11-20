@@ -3,9 +3,9 @@ const {
     UserLoginPostController,
     UserRecoveryPasswordSubmitPostController,
     UserRecoveryPasswordCheckGetController,
-} = require("../../controllers/UserController");
-const authMiddleware = require("../../middlewares/authMiddleware");
-const roleChecker = require("../../middlewares/roleChecker");
+} = require("../controllers/UserController");
+const authMiddleware = require("../middlewares/authMiddleware");
+const roleChecker = require("../middlewares/roleChecker");
 
 const router = require("express").Router();
 
