@@ -20,6 +20,5 @@ router.post("/login", UserLoginPostController);
 
 router.post("/password", UserRecoveryPasswordSubmitPostController);
 router.get("/password/:attempt_id", UserRecoveryPasswordCheckGetController);
-router.get("/", [authMiddleware, roleChecker("admin")], UserGetController);
 
 module.exports = router;

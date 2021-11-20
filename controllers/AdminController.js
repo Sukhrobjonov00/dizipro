@@ -52,4 +52,30 @@ module.exports = class AdminController {
             next(error);
         }
     }
+
+    static async GetAllUsersController(req, res, next) {
+        try {
+            const page = req.query.page ? req.query.page - 1 : 0;
+            const limit = req.query.limit || 15;
+            const order = req.query.order == "DESC" ? "DESC" : "ASC";
+
+            const users = await req.db.users.findAll({
+                limit: limit,
+                offset: page * 15,
+                order: [["createdAt", order]],
+                include: [req.db.user_bans, req.db.sessions],
+                attributes: {
+                    exclude: ["user_password"],
+                },
+            });
+
+            res.status(200).json({
+                ok: true,
+                message: "Users retrieved successfully",
+                data: { users },
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 };
