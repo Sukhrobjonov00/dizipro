@@ -28,4 +28,14 @@ module.exports = async function relations(db) {
         foreignKey: "user_id",
         allowNull: false,
     });
+
+    await db.users.hasMany(db.user_bans, {
+        foreignKey: "user_id",
+        allowNull: false,
+    });
+
+    await db.user_bans.belongsTo(db.users, {
+        foreignKey: "user_id",
+        allowNull: false,
+    });
 };
