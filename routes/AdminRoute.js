@@ -9,6 +9,6 @@ const router = require("express").Router();
 router.use([authMiddleware, roleChecker("admin")]);
 
 router.post("/bans", CreateBanPostController);
-router.post("/bans/:ban_id", DeleteBanController);
+router.delete("/bans/:ban_id", DeleteBanController);
 
 module.exports = router;
