@@ -76,6 +76,12 @@ module.exports = class UserController {
                 user_role: user.user_role,
             });
 
+            await req.db.email_attempts.destroy({
+                where: {
+                    user_id: user.user_id,
+                },
+            });
+
             res.status(201).json({
                 ok: true,
                 message: "User logged in successfully",
@@ -133,8 +139,6 @@ module.exports = class UserController {
     static async UserRecoveryPasswordCheckGetController(req, res, next) {
         try {
             const { attempt_id } = req.params;
-
-            console.log(attempt_id);
 
             if (!attempt_id) throw new res.error(404, "Page not found");
 
