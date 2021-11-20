@@ -13,6 +13,9 @@ module.exports = class AdminController {
 
             if (!user) throw new res.error(404, "User not found");
 
+            if (user.user_role === "admin")
+                throw new res.error(400, "You can't ban admins");
+
             const ban = await req.db.user_bans.create({
                 user_id: data.user_id,
                 ban_reason: data.ban_reason,
@@ -23,6 +26,27 @@ module.exports = class AdminController {
                 ok: true,
                 message: "Ban created",
                 data: { ban },
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async DeleteBanController(req, res, next) {
+        try {
+            const ban_id = req.params.ban_id;
+
+            const ban = await req.db.user_bans.destroy({
+                where: {
+                    ban_id,
+                },
+            });
+
+            if (!ban) throw new res.error(404, "Ban not found");
+
+            res.status(200).json({
+                ok: true,
+                message: "Ban removed",
             });
         } catch (error) {
             next(error);
