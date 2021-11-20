@@ -29,6 +29,8 @@ module.exports = async function AuthMiddleware(req, res, next) {
             raw: true,
         });
 
+        if (!session) throw new res.error(401, "Unauthorized");
+
         if (session["user.user_bans.ban_expire_date"]) {
             res.json({
                 ok: true,
@@ -41,8 +43,6 @@ module.exports = async function AuthMiddleware(req, res, next) {
 
             return;
         }
-
-        if (!session) throw new res.error(401, "Unauthorized");
 
         req.session = session;
         req.role = data.user_role;
