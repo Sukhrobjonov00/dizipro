@@ -6,7 +6,4 @@ router.use(authMiddleware);
 
 router.get("/", HomeGetController);
 
-// router.post("/password", UserRecoveryPasswordSubmitPostController);
-// router.get("/password/:attempt_id", UserRecoveryPasswordCheckGetController);
-
 module.exports = router;

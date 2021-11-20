@@ -187,4 +187,18 @@ module.exports = class UserController {
             next(error);
         }
     }
+
+    static async UserGetController(req, res, next) {
+        try {
+            const users = await req.db.users.findAll();
+
+            res.status(200).json({
+                ok: true,
+                message: "Users retrieved successfully",
+                data: { users },
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 };
