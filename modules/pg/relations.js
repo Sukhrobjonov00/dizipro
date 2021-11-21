@@ -55,8 +55,6 @@ module.exports = async function relations(db) {
         },
     });
 
-    //
-
     await db.users.hasMany(db.projects, {
         foreignKey: {
             name: "user_id",

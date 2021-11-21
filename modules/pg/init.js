@@ -3,6 +3,9 @@ const { genHash } = require("../bcrypt");
 module.exports = async function init(db) {
     const countries = await db.countries.count();
     const users = await db.users.count();
+    const skills = await db.skills.count();
+    const softwares = await db.softwares.count();
+
     if (countries === 0) {
         for (let country of data) {
             await db.countries.create({
@@ -29,6 +32,16 @@ module.exports = async function init(db) {
             user_email: "user@gmail.com",
             user_role: "user",
             country_id: 1,
+        });
+    }
+
+    if ((skills && softwares) === 0) {
+        const skill = await db.skills.create({
+            skill_name: "JavaScript",
+        });
+
+        const software = await db.softwares.create({
+            software_name: "VS CODE",
         });
     }
 };
