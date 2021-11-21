@@ -37,7 +37,7 @@ module.exports = async function postgres() {
             Sequelize
         );
         db.projects_files = await ProjectFilesModel(sequelize, Sequelize);
-
+        db.sequelize = sequelize;
         await relations(db);
 
         await init(db);
