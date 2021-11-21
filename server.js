@@ -20,6 +20,8 @@ async function server() {
         const db = await postgres();
         databaseMiddleware(db, app);
 
+        console.log(db);
+
         app.use(customErrorMiddleware);
 
         app.use("/v1", Routes);
