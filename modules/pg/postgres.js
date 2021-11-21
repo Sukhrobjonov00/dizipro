@@ -3,6 +3,7 @@ const BanModel = require("../../models/BanModel");
 const CountryModel = require("../../models/CountryModel");
 const EmailAttempts = require("../../models/EmailAttempts");
 const ProjectModel = require("../../models/ProjectModel");
+const ProjectSoftwareModel = require("../../models/ProjectSoftwareModel");
 const ProjectsSkillModel = require("../../models/ProjectsSkillModel");
 const SessionModel = require("../../models/SessionModel");
 const SkillModel = require("../../models/SkillModel");
@@ -30,6 +31,10 @@ module.exports = async function postgres() {
         db.softwares = await SoftwareModel(sequelize, Sequelize);
         db.projects = await ProjectModel(sequelize, Sequelize);
         db.projects_skills = await ProjectsSkillModel(sequelize, Sequelize);
+        db.projects_softwares = await ProjectSoftwareModel(
+            sequelize,
+            Sequelize
+        );
 
         await relations(db);
 
