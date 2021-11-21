@@ -4,6 +4,7 @@ const CountryModel = require("../../models/CountryModel");
 const EmailAttempts = require("../../models/EmailAttempts");
 const SessionModel = require("../../models/SessionModel");
 const SkillModel = require("../../models/SkillModel");
+const SoftwareModel = require("../../models/SoftwareModel");
 const UserModel = require("../../models/UserModel");
 const init = require("./init");
 const relations = require("./relations");
@@ -24,6 +25,7 @@ module.exports = async function postgres() {
         db.email_attempts = await EmailAttempts(sequelize, Sequelize);
         db.user_bans = await BanModel(sequelize, Sequelize);
         db.skills = await SkillModel(sequelize, Sequelize);
+        db.softwares = await SoftwareModel(sequelize, Sequelize);
 
         await relations(db);
 
