@@ -47,6 +47,7 @@ module.exports = class UserValidations {
                 user_email: joi
                     .string()
                     .email()
+                    .required()
                     .lowercase()
                     .error(new error(400, "Email is invalid")),
                 user_password: joi
