@@ -4,7 +4,9 @@ const HomeRouter = require("../routes/HomeRoute");
 const AdminRouter = require("../routes/AdminRoute");
 const UserRouter = require("../routes/UserRoute");
 const SkillRouter = require("../routes/SkillRoute");
+const SoftwareRouter = require("../routes/SoftwareRoute");
 
+Router.use("/softwares", SoftwareRouter);
 Router.use("/skills", SkillRouter);
 Router.use("/users", UserRouter);
 Router.use("/admin", AdminRouter);
