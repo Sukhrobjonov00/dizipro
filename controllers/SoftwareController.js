@@ -10,7 +10,7 @@ module.exports = class SoftwareController {
                 res.error
             );
 
-            const software = await req.db.software.create({
+            const software = await req.db.softwares.create({
                 software_name,
             });
 
@@ -26,7 +26,7 @@ module.exports = class SoftwareController {
 
     static async SoftwaresGetController(req, res, next) {
         try {
-            const softwares = await req.db.software.findAll();
+            const softwares = await req.db.softwares.findAll();
 
             res.status(200).json({
                 ok: true,
